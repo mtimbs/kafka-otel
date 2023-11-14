@@ -16,7 +16,6 @@ docker compose up
 
 This will boot up
 - zookeeper
-- schema registry
 - kafka (single broker)
 - producer app (producer/main.ts)
 - consumer app (consumer/main.ts)
