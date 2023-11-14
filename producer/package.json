@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild main.ts --bundle --platform=node --target=node20 --outfile=Build/producer.js"
+    "build": "esbuild main.ts --bundle --platform=node --target=node20  --outfile=Build/producer.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,6 @@
     "@opentelemetry/api": "^1.7.0",
     "@opentelemetry/sdk-node": "^0.45.1",
     "@opentelemetry/sdk-trace-base": "^1.18.1",
-    "kafkajs": "^2.2.4",
-    "opentelemetry-instrumentation-kafkajs": "^0.40.0"
+    "kafkajs": "^2.2.4"
   }
 }

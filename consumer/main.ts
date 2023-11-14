@@ -7,14 +7,23 @@ const tracer = trace.getTracer("test-consumer", "1.0");
 const sleep = (ms: number) => new Promise( resolve => setTimeout(resolve, ms));
 
 const messageHandler = async ({ topic, partition, message }) => {
-    tracer.startActiveSpan("consumer-message-handler", {kind: SpanKind.CONSUMER}, (span) => {
+    const traceOptions = {
+        kind: SpanKind.CONSUMER,
+        links: [
+            { context: JSON.parse(message.headers['correlation-context'].toString()) }
+        ]
+    };
+
+    tracer.startActiveSpan("consumer-message-handler", traceOptions, (span) => {
         console.log("handling message", {
             topic,
             partition,
             key: message.key?.toString(),
             value: message.value.toString(),
             headers: message.headers,
+            correlationCtx: JSON.parse(message.headers['correlation-context'].toString())
         })
+
         span.end();
     });
 }

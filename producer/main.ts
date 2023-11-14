@@ -13,11 +13,19 @@ const tracer = trace.getTracer("test-producer", "1.0");
     let i = 1;
     while (i < 1000) {
         await tracer.startActiveSpan("send-test-message", {kind: SpanKind.PRODUCER}, async (span) => {
+            const ctx = span.spanContext();
             await producer.send({
                 topic: process.env.TEST_KAFKA_TOPIC,
                 messages: [
                     {
-                        value: `Test Message # ${i}`
+                        headers: {
+                            'correlation-context': Buffer.from(JSON.stringify(ctx)),
+                        },
+                        key: `${i%5}`,
+                        value: JSON.stringify({
+                            id: i,
+                            message: `Test message number ${i}`
+                        })
                     }
                 ],
             })

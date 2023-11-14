@@ -1,5 +1,5 @@
-import {kafka} from "./client";
 import {Partitioners} from "kafkajs";
+import {kafka} from "./client";
 
 export const producer = kafka.producer({
     allowAutoTopicCreation: true,
